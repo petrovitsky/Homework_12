@@ -14,13 +14,13 @@ public class NoteService {
     }
 
     public Note add(Note note) {
-        long id = random.nextLong();
+        Long id = (Long) random.nextLong();
         note.setId(id);
         notes.put(id, note);
         return note;
     }
 
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         if (!notes.containsKey(id)) {
             throw new RuntimeException("Note not found for id " + id);
         }
@@ -34,7 +34,7 @@ public class NoteService {
         notes.put(note.getId(), note);
     }
 
-    public Note getById(long id) {
+    public Note getById(Long id) {
         if (!notes.containsKey(id)) {
             throw new RuntimeException("Note not found for id " + id);
         }
