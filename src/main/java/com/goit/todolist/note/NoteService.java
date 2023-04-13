@@ -2,12 +2,24 @@ package com.goit.todolist.note;
 
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
+
 @Service
 public class NoteService {
 
     private final Map<Long, Note> notes = new HashMap<>();
     private final Random random = new Random();
+
+    @PostConstruct
+    public void init() {
+        for (int i = 0; i < 25; i++) {
+            Note note = new Note();
+            note.setTitle("note " + i);
+            note.setContent("Some content" + i);
+            add(note);
+        }
+    }
 
     public List<Note> listAll() {
         return new ArrayList<>(notes.values());

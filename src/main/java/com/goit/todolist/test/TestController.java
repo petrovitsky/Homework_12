@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class TestController {
     @GetMapping
     public ModelAndView getTestHtml(){
-        return new ModelAndView("test");
+        return new ModelAndView("list");
     }
 }
 
