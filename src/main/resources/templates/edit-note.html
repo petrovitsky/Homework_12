@@ -9,20 +9,19 @@
 </head>
 <body>
 
-<div class="container-xx
-l">
+<div class="container-sm mt-3">
     <h2>Edit note</h2>
     <form action="/note/edit" method="POST">
         <div class="mb-3 mt-3">
             <label for="title">Title:</label>
-            <input th:value="${note.getTitle()}" type="text" id="title" name="title">
+            <input class="form-control" th:value="${note.getTitle()}" type="text" id="title" name="title">
         </div>
         <div class="mb-3">
-            <label for="content">Content:</label>
-            <input th:value="${note.getContent()}" type="text" id="content" name="content">
-            <input type="hidden" id="id" name="id" th:value="${note.getId()}">
+            <label for="content" class="form-label" >Content:</label>
+            <textarea class="form-control" th:text="${note.getContent()}" rows="3" id="content" name="content"> </textarea>
         </div>
         <div>
+            <input type="hidden" id="id" name="id" th:value="${note.getId()}">
         </div>
         <button type="submit" class="btn btn-secondary">Submit</button>
     </form>
