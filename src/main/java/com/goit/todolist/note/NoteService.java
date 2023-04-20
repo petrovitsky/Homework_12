@@ -1,56 +1,33 @@
 package com.goit.todolist.note;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class NoteService {
-
-    private final Map<Long, Note> notes = new HashMap<>();
-    private final Random random = new Random();
-
-    @PostConstruct
-    public void init() {
-        for (int i = 0; i < 25; i++) {
-            Note note = new Note();
-            note.setTitle("note " + i);
-            note.setContent("Some content" + i);
-            add(note);
-        }
-    }
+    private final NoteRepository noteRepository;
 
     public List<Note> listAll() {
-        return new ArrayList<>(notes.values());
+        return noteRepository.findAll();
     }
 
     public Note add(Note note) {
-        Long id = (Long) random.nextLong();
-        note.setId(id);
-        notes.put(id, note);
-        return note;
+        return noteRepository.save(note);
     }
 
     public void deleteById(Long id) {
-        if (!notes.containsKey(id)) {
-            throw new RuntimeException("Note not found for id " + id);
-        }
-        notes.remove(id);
+        noteRepository.deleteById(id);
     }
 
     public void update(Note note) {
-        if (!notes.containsKey(note.getId())) {
-            throw new RuntimeException("Note not found for id " + note.getId());
-        }
-        notes.put(note.getId(), note);
+        noteRepository.save(note);
     }
 
     public Note getById(Long id) {
-        if (!notes.containsKey(id)) {
-            throw new RuntimeException("Note not found for id " + id);
-        }
-        return notes.get(id);
+        return noteRepository.findById(id).orElseThrow();
     }
 
 }

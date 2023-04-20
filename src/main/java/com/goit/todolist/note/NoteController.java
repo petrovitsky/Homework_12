@@ -25,11 +25,11 @@ public class NoteController {
     @GetMapping("/delete")
     public String deleteById(@RequestParam(name = "id") Long id) {
         noteService.deleteById(id);
-        return "redirect:/note/list";
+        return NoteConstants.REDIRECT_NOTE_LIST;
     }
 
     @GetMapping("/edit")
-    public ModelAndView getEditById(@RequestParam(name = "id", required = true) Long id) {
+    public ModelAndView getEditById(@RequestParam(name = "id") Long id) {
         final ModelAndView modelAndView = new ModelAndView("edit-note");
         modelAndView.addObject("note", noteService.getById(id));
         return modelAndView;
@@ -39,6 +39,18 @@ public class NoteController {
     public String postEditById(@RequestParam(name = "id") Long id, @RequestParam(name = "title") String title,
                                @RequestParam(name = "content") String content) {
         noteService.update(new Note(id, title, content));
-        return "redirect:/note/list";
+        return NoteConstants.REDIRECT_NOTE_LIST;
+    }
+
+    @GetMapping("/add")
+    public ModelAndView getAddNote() {
+        return new ModelAndView("add-note");
+    }
+    @PostMapping("/add")
+    public String postAddNote(@RequestParam(name = "content") String content,
+                              @RequestParam(name= "title") String title){
+        noteService.add(new Note(title, content));
+        return NoteConstants.REDIRECT_NOTE_LIST;
     }
 }
+
